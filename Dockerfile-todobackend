@@ -7,7 +7,7 @@ RUN ["java", "-version"]
 
 #Install maven
 RUN apk update
-RUN apk add maven
+RUN apk add openjdk-8-jdk maven
 
 
 RUN mkdir -p /opt/todobackend
