@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: postgresdb
+spec:
+  template:
+    metadata:
+      labels:
+        app: postgresdb
+    spec:
+      volumes:
+        - name: data
+          emptyDir: {}
+      containers:
+       - image: postgres
+         name: postgresdb
+         env:
+         - name: POSTGRES_USER
+           valueFrom:
+             secretKeyRef:
+               name: db-security
+               key: db.user.name
+         - name: POSTGRES_PASSWORD
+           valueFrom:
+             secretKeyRef:
+               name: db-security
+               key: db.user.password
+         - name: POSTGRES_DB
+           valueFrom:
+             configMapKeyRef:
+               name: postgres-config
+               key: postgres.db.name 
+         ports:
+         - containerPort: 5432
+           name: postgresdb
+         volumeMounts:
+           - name: data
+             mountPath: /var/lib/postgresql/data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresdb
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5432
+  selector:
+    app: postgresdb
