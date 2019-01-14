@@ -1,5 +1,5 @@
 node{
-  def app
+  
   //Define all variables
   def appName = 'todobackend'
   def serviceName = "${appName}-backend" 
@@ -20,9 +20,7 @@ node{
 		docker.withRegistry('', 'dockerhub') {
 		sh "docker login -u ${USERNAME} -p ${PASSWORD}"
 		sh("docker push mirna/todobackend:${env.BUILD_NUMBER}")
-			    app.push("${env.BUILD_NUMBER}")
-			    app.push("latest")
-
+			    
 
 		  }
 		  
