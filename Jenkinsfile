@@ -16,15 +16,11 @@ node{
   //Stage 2 : Push the image to docker registry
   stage('Push image to registry') {
       sh("docker push mirna/todobackend:${env.BUILD_NUMBER}")
-         withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-			    usr = USERNAME
-			    pswd = PASSWORD
-		    }
-        docker.withRegistry('', 'dockerhub') {
-            sh "docker login -u ${usr} -p ${pswd}"
+	  sh "docker login -u mirna -p 27122015d2015??"
+             
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
-        }
+        
   
   }
   
