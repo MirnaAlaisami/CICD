@@ -16,7 +16,7 @@ node{
   //Stage 2 : Push the image to docker registry
   stage('Push image to registry') {
       sh("docker push ${imageTag}")
-      docker.withRegistry('https://hub.docker.com', 'dockerhub') {
+      docker.withRegistry('https://hub.docker.com/u/mirna', 'dockerhub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
