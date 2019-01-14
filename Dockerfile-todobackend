@@ -20,7 +20,7 @@ ADD todobackend/src /opt/todobackend/src
 
 #Build the code
 RUN ["mvn", "clean"]
-RUN ["mvn", "install"]
+RUN ["mvn", "install", "-DskipTests"]
 
 #Optional you can include commands to run test cases.
 
