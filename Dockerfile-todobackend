@@ -6,7 +6,7 @@ RUN mkdir -p /opt/todobackend
 WORKDIR /opt/todobackend
 
 #Install maven
-RUN apt-get update
+RUN apt-get -y update
 RUN apt-get install -y maven
 
 #Copy the SRC, LIB and pom.xml to WORKDIR
