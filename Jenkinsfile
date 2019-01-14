@@ -16,7 +16,7 @@ node{
   //Stage 2 : Push the image to docker registry
   stage('Push image to registry') {
       sh("docker push mirna/todobackend:${env.BUILD_NUMBER}")
-         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: params.JP_DockerMechIdCredential, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+         withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 			    usr = USERNAME
 			    pswd = PASSWORD
 		    }
