@@ -1,5 +1,5 @@
 node{
-
+  def app
   //Define all variables
   def appName = 'todobackend'
   def serviceName = "${appName}-backend" 
