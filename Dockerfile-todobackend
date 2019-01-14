@@ -1,5 +1,5 @@
 #Docker base image : Alpine Linux with OpenJDK JRE
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-jdk-alpine
 
 #Check the java version
 RUN ["java", "-version"]
@@ -7,7 +7,6 @@ RUN ["java", "-version"]
 
 #Install maven
 RUN apk update
-RUN apk add openjdk-8-jdk 
 RUN apk add maven
 
 
