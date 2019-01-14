@@ -30,7 +30,7 @@ node{
 	
  //Stage 3 : Deploy Application
   stage('Deploy Application') {
-	           sh("sed -i.bak '${imageTag}#' ./todobackend.yaml")
+	           sh("sed -i.bak 's#${imageTag}#' ./todobackend.yaml")
 	           sh("kubectl create configmap postgres-config --from-literal=postgres.db.name=mydb")
 	   	   sh("kubectl create secret generic db-security --from-literal=db.user.name=matthias --from-literal=db.user.password=password")
                    sh("kubectl apply -f postgres.yaml")
