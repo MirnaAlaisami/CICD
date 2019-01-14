@@ -10,7 +10,7 @@ node{
   
   //Stage 1 : Build the docker image.
   stage('Build image') {
-      sh("docker build -f Dockerfile-todobackend ${imageTag} .")
+      sh("docker build -f Dockerfile-todobackend -t ${imageTag} .")
   }
   
   //Stage 2 : Push the image to docker registry
