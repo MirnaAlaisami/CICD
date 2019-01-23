@@ -16,7 +16,7 @@ stage('mvn build') {
                     // This is where we build the Docker image
                 
       
-                sh 'mvn -B -DskipTests clean package' 
+                sh ("mvn -B -DskipTests clean package")
             
 		  }
   }
