@@ -29,7 +29,7 @@ node{
 	
 	
 //Stage 3 : Deploy Application
-  stage('Deploy Application') {
+  stage('Deploy Application on K8s') {
 	  
 	  	   sh("kubectl set image deployment/todobackend todobackend=${imageTag}")
 	           sh("kubectl create configmap postgres-config --from-literal=postgres.db.name=mydb")
