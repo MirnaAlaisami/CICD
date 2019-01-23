@@ -48,7 +48,7 @@ node{
                     contextName: 'gke_novatec-zweibruecken_europe-west3_nt-asca',
                     clusterName: 'gke_novatec-zweibruecken_europe-west3_nt-asca'
 				 ]){
-	  
+	  	   sh("kubectl apply -f todobackend.yaml")
 	  	   sh("kubectl set image deployment/todobackend todobackend=${imageTag}")
 	           sh("kubectl create configmap postgres-config --from-literal=postgres.db.name=mydb")
 	   	   sh("kubectl create secret generic db-security --from-literal=db.user.name=matthias --from-literal=db.user.password=password")
