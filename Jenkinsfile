@@ -22,6 +22,7 @@ node{
   
   //Stage 2 : Push the image to docker registry
   stage('Push image to registry') {
+	  container('docker'){
 	withCredentials([[$class: 'UsernamePasswordMultiBinding',
   credentialsId: 'dockerhub',
   usernameVariable: 'USERNAME',
@@ -34,6 +35,7 @@ node{
 
 		  }
 		  
+	  }
 	  }
   }
 	
