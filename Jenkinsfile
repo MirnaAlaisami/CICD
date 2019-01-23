@@ -11,7 +11,11 @@ node{
   
   //Stage 1 : Build the docker image.
   stage('Build image') {
+	  container(‘docker’){
+                    // This is where we build the Docker image
+                
       sh("docker build -f Dockerfile-todobackend -t mirna/todobackend:${env.BUILD_NUMBER} .")
+		  }
   }
   
   //Stage 2 : Push the image to docker registry
