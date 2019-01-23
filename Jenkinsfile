@@ -11,6 +11,15 @@ node{
   
   //Stage 1 : Build the docker image.
 	
+stage('mvn build') {
+	  container('maven'){
+                    // This is where we build the Docker image
+                
+      
+                sh 'mvn -B -DskipTests clean package' 
+            
+		  }
+  }
   stage('Build image') {
 	  container('docker'){
                     // This is where we build the Docker image
