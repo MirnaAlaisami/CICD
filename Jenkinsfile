@@ -53,7 +53,7 @@ node{
 	           sh("kubectl create configmap postgres-config --from-literal=postgres.db.name=mydb")
 	   	   sh("kubectl create secret generic db-security --from-literal=db.user.name=matthias --from-literal=db.user.password=password")
                    sh("kubectl apply -f postgres.yml")
-                   sh("kubectl apply -f todobackend.yml")
+                   
 		  }
                    
 	  }
