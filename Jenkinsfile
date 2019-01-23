@@ -10,6 +10,7 @@ node{
   checkout scm
   
   //Stage 1 : Build the docker image.
+	
   stage('Build image') {
 	  container('docker'){
                     // This is where we build the Docker image
@@ -17,10 +18,14 @@ node{
       sh("docker build -f Dockerfile-todobackend -t mirna/todobackend:${env.BUILD_NUMBER} .")
 		  }
   }
+	
   
   //Stage 2 : Push the image to docker registry
   stage('Push image to registry') {
-	  withCredentials([usernamePassword( credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+	withCredentials([[$class: 'UsernamePasswordMultiBinding',
+  credentialsId: 'dockerhub',
+  usernameVariable: 'USERNAME',
+  passwordVariable: 'PASSWORD']]) {
 
 		docker.withRegistry('', 'dockerhub') {
 		sh "docker login -u ${USERNAME} -p ${PASSWORD}"
