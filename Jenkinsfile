@@ -13,12 +13,14 @@ node{
 	
 stage('mvn build') {
 	  container('maven'){
+		  dir ('./todobackend') {
                     // This is where we build the Docker image
                 
       
                 sh ("mvn -B -DskipTests clean package")
             
 		  }
+	  }
   }
   stage('Build image') {
 	  container('docker'){
