@@ -43,6 +43,8 @@ node{
 //Stage 3 : Deploy Application
   stage('Deploy Application on K8s') {
 	  container('docker'){
+		  withKubeConfig([credentialsId: 'novatec-zweibruecken'
+                    ])
 	  
 	  	   sh("kubectl set image deployment/todobackend todobackend=${imageTag}")
 	           sh("kubectl create configmap postgres-config --from-literal=postgres.db.name=mydb")
