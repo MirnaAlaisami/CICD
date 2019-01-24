@@ -6,7 +6,7 @@ node{
 
   //Stage 1: Checkout Code from Git
     stage('Application Code Checkout from Git') {
-                sh ("checkout scm")
+                checkout scm
     }
   
   //Stage 2: Build with mvn
