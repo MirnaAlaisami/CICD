@@ -57,7 +57,9 @@ node{
             		clusterName: 'gke_novatec-zweibruecken_europe-west3_nt-asca']){
 				sh("kubectl apply -f ${appName}.yml")
 				sh("kubectl set image deployment/${appName} ${containerName}=${imageTag}")
+				sh("kubectl delete configmap postgres-config")
 				sh("kubectl create configmap postgres-config --from-literal=postgres.db.name=${dbName}")
+				sh("kubectl delete secret db-security")
 				sh("kubectl create secret generic db-security --from-literal=db.user.name=${dbUserName} --from-literal=db.user.password=${dbUserPassword}")
 				sh("kubectl apply -f postgres.yml")
 			}     
