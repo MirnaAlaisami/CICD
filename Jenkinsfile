@@ -1,4 +1,3 @@
-pipeline {
 
   //Define all variables
   def appName = 'todobackend'
@@ -8,6 +7,8 @@ pipeline {
   def dbName = 'mydb'
   def dbUserName = 'matthias'
   def dbUserPassword = 'password'
+  
+pipeline {
 	
    stages {
 	   
