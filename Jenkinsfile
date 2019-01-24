@@ -18,7 +18,7 @@ node{
   //Stage 2: Build with mvn
 	stage('Build with Maven') {
 		container('maven'){
-			dir ('./${appName}') {
+			dir ("./${appName}") {
 				sh ("mvn -B -DskipTests clean package")
 			}
 		}
