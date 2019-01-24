@@ -1,4 +1,4 @@
-
+node {
   //Define all variables
   def appName = 'todobackend'
   def imageTag = "mirna/${appName}:${env.BUILD_NUMBER}"
@@ -8,41 +8,39 @@
   def dbUserName = 'matthias'
   def dbUserPassword = 'password'
   
-pipeline {
-	
-   stages {
+
 	   
 	  //Stage 1: Checkout Code from Git
 	    stage('Application Code Checkout from Git') {
-		    steps {
+		    
 			checkout scm
-		    }
+		    
 	    }
 
 	  //Stage 2: Build with mvn
 		stage('Build with Maven') {
-			steps {
+			
 				container('maven'){
 					dir ("./${appName}") {
 							sh ("mvn -B -DskipTests clean package")
 					}
 				}
-			}
+			
 		}
 
 	  //Stage 3: Build Docker Image	
 	    stage('Build Docker Image') {
-			steps {
+			
 				container('docker'){
 						sh("docker build -f ${dockerFileName} -t ${imageTag} .")
 				}
-			}
+			
 	    }
 
 
 	  //Stage 4: Push the Image to a Docker Registry
 	    stage('Push Docker Image to Docker Registry') {
-		    steps {
+		    
 			container('docker'){
 				withCredentials([[$class: 'UsernamePasswordMultiBinding',
 				credentialsId: 'dockerhub',
@@ -54,13 +52,13 @@ pipeline {
 					}
 				}
 			}
-		    }
+		    
 	    }
 
 
 	  //Stage 5 : Deploy Application
 	    stage('Deploy Application on K8s') {
-		    steps {
+		    
 			container('kubectl'){
 				withKubeConfig([credentialsId: 'be4d8aa0-a081-466c-a8e9-dc0c151b3654',
 				serverUrl: 'https://35.198.139.89',
@@ -75,9 +73,9 @@ pipeline {
 						sh("kubectl apply -f postgres.yml")
 				}     
 			}
-		    }
+		    
 	  }
 	   
-   }
+   
 	
 }
