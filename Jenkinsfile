@@ -1,13 +1,13 @@
 node{
 
   //Define all variables
-  def appName = "todobackend"
+  def appName = 'todobackend'
   def imageTag = "mirna/${appName}:${env.BUILD_NUMBER}"
-  def dockerFileName = "Dockerfile-todobackend"
-  def containerName = "todobackend"
-  def dbName = "mydb"
-  def dbUserName = "matthias"
-  def dbUserPassword = "password"
+  def dockerFileName = 'Dockerfile-todobackend'
+  def containerName = 'todobackend'
+  def dbName = 'mydb'
+  def dbUserName = 'matthias'
+  def dbUserPassword = 'password'
 	
 
   //Stage 1: Checkout Code from Git
