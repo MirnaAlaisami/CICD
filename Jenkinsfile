@@ -45,7 +45,6 @@ node {
 				usernameVariable: 'USERNAME',
 				passwordVariable: 'PASSWORD']]) {
 					docker.withRegistry('', 'dockerhub') {
-							sh "docker login -u ${USERNAME} -p ${PASSWORD}"
 							sh("docker push ${imageTag}")
 					}
 				}
@@ -58,10 +57,10 @@ node {
 	    stage('Deploy Application on K8s') {
 		    
 			container('kubectl'){
-				withKubeConfig([credentialsId: 'be4d8aa0-a081-466c-a8e9-dc0c151b3654',
-				serverUrl: 'https://35.198.139.89',
-				contextName: 'gke_novatec-zweibruecken_europe-west3_nt-asca',
-				clusterName: 'gke_novatec-zweibruecken_europe-west3_nt-asca']){
+				withKubeConfig([credentialsId: env.K8s_Credentials,
+				serverUrl: env.K8s_ServerURL,
+				contextName: env.K8s_contextName,
+				clusterName: env.K8s_clusterName]){
 						sh("kubectl apply -f ${appName}.yml")
 						sh("kubectl set image deployment/${appName} ${containerName}=${imageTag}")
 						sh("kubectl delete configmap postgres-config")
