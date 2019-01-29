@@ -1,7 +1,7 @@
 node {
 	//Define all variables
 	def appName = 'todobackend'
-	def imageTag = "mirna/${appName}:${env.BUILD_NUMBER}"
+	def imageTag = "mirna/${appName}:v${env.BUILD_NUMBER}"
 	def dockerFileName = 'Dockerfile-todobackend'
 	def containerName = 'todobackend'
 	def dbName = 'mydb'
@@ -52,13 +52,12 @@ node {
 			serverUrl: env.K8s_ServerURL,
 			contextName: env.K8s_contextName,
 			clusterName: env.K8s_clusterName]){
-				sh("kubectl apply -f ${appName}.yml")
-				sh("kubectl set image deployment/${appName} ${containerName}=${imageTag}")
 				sh("kubectl delete configmap postgres-config")
 				sh("kubectl create configmap postgres-config --from-literal=postgres.db.name=${dbName}")
 				sh("kubectl delete secret db-security")
 				sh("kubectl create secret generic db-security --from-literal=db.user.name=${dbUserName} --from-literal=db.user.password=${dbUserPassword}")
 				sh("kubectl apply -f postgres.yml")
+				sh("kubectl apply -f ${appName}.yml")
 			}     
 		}
 		
