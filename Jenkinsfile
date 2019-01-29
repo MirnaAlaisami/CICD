@@ -1,7 +1,7 @@
 node {
 	//Define all variables
 	def appName = 'todobackend'
-	def imageTag = "mirna/${appName}:v${env.BUILD_NUMBER}"
+	def imageTag = "${env.Docker_Registry}/${appName}:v${env.BUILD_NUMBER}"
 	def dockerFileName = 'Dockerfile-todobackend'
 	def containerName = 'todobackend'
 	
