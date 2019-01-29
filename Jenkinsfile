@@ -53,8 +53,7 @@ node {
 			contextName: env.K8s_contextName,
 			clusterName: env.K8s_clusterName]){
 				sh("kubectl apply -f configmap.yml")
-				sh("kubectl delete secret db-security")
-				sh("kubectl create secret generic db-security --from-literal=db.user.name=${dbUserName} --from-literal=db.user.password=${dbUserPassword}")
+				sh("kubectl apply -f secret.yml")
 				sh("kubectl apply -f postgres.yml")
 				sh("kubectl apply -f ${appName}.yml")
 			}     
