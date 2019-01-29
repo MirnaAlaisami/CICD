@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: todobackend
-        image: 'mirna/todobackend:v$BUILD_NUMBER'
+        image: mirna/todobackend:v${build.number}
 ---
 apiVersion: v1
 kind: Service
