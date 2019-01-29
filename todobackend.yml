@@ -12,7 +12,7 @@ spec:
         app: todobackend
     spec:
       containers:
-      - image: mirna/todobackend
+      - image: mirna/todobackend:1
         name: todobackend
 ---
 apiVersion: v1
