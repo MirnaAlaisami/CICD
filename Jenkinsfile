@@ -31,7 +31,7 @@ node {
 	stage('Push Docker Image to Docker Registry') {
 		container('docker'){
 			withCredentials([[$class: 'UsernamePasswordMultiBinding',
-			credentialsId: 'dockerhub',
+			credentialsId: env.Docker_Credentials_ID,
 			usernameVariable: 'USERNAME',
 			passwordVariable: 'PASSWORD']]) {
 				docker.withRegistry(env.Docker_Registry, env.Docker_Credentials_ID) {
