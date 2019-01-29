@@ -45,7 +45,7 @@ node {
 		
 	}
 
-	//Stage 5 : Deploy Application
+	//Stage 5 : Deploy Application on K8s
 	stage('Deploy Application on K8s') {
 		container('kubectl'){
 			withKubeConfig([credentialsId: env.K8s_Credentials,
