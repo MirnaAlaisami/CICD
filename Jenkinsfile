@@ -34,7 +34,7 @@ node {
 			credentialsId: 'dockerhub',
 			usernameVariable: 'USERNAME',
 			passwordVariable: 'PASSWORD']]) {
-				docker.withRegistry('', env.Docker_Credentials_ID) {
+				docker.withRegistry(env.Docker_Registry, env.Docker_Credentials_ID) {
 					sh("docker push ${imageTag}")
 				}
 			}
