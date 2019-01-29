@@ -12,13 +12,7 @@ spec:
         app: todobackend
     spec:
       containers:
-        env:
-        - name: BUILD_NUMBER
-          valueFrom:
-            configMapKeyRef:
-              name: postgres-config
-              key: postgres.build.number
-      - image: mirna/todobackend:v$BUILD_NUMBER
+      - image: mirna/todobackend
         name: todobackend
 ---
 apiVersion: v1
