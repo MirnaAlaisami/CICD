@@ -5,7 +5,7 @@ node {
   def dockerFileName = 'Dockerfile-todobackend'
   def containerName = 'todobackend'
   def dbName = 'mydb'
-  def dbUserName = 'matthias'
+  def dbUserName = 'user'
   def dbUserPassword = 'password'
   
 
