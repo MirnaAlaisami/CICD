@@ -4,9 +4,6 @@ node {
 	def imageTag = "mirna/${appName}:v${env.BUILD_NUMBER}"
 	def dockerFileName = 'Dockerfile-todobackend'
 	def containerName = 'todobackend'
-	def dbName = 'mydb'
-	def dbUserName = 'matthias'
-	def dbUserPassword = 'password'
 	
 	//Stage 1: Checkout Code from Git
 	stage('Application Code Checkout from Git') {
@@ -37,7 +34,7 @@ node {
 			credentialsId: 'dockerhub',
 			usernameVariable: 'USERNAME',
 			passwordVariable: 'PASSWORD']]) {
-				docker.withRegistry('', 'dockerhub') {
+				docker.withRegistry('', env.Docker_Credentials_ID) {
 					sh("docker push ${imageTag}")
 				}
 			}
@@ -48,10 +45,10 @@ node {
 	//Stage 5 : Deploy Application on K8s
 	stage('Deploy Application on K8s') {
 		container('kubectl'){
-			withKubeConfig([credentialsId: env.K8s_Credentials,
+			withKubeConfig([credentialsId: env.K8s_Credentials_ID,
 			serverUrl: env.K8s_ServerURL,
-			contextName: env.K8s_contextName,
-			clusterName: env.K8s_clusterName]){
+			contextName: env.K8s_ContextName,
+			clusterName: env.K8s_ClusterName]){
 				sh("kubectl apply -f configmap.yml")
 				sh("kubectl apply -f secret.yml")
 				sh("kubectl apply -f postgres.yml")
