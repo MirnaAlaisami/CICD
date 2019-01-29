@@ -12,14 +12,14 @@ spec:
         app: todobackend
     spec:
       containers:
+      - name: todobackend
         env:
         - name: BUILD_NUMBER
           valueFrom:
             configMapKeyRef:
               name: postgres-config
               key: postgres.build.number
-      - name: todobackend
-        image: mirna/todobackend:v$BUILD_NUMBER
+      - image: mirna/todobackend:v$BUILD_NUMBER
 ---
 apiVersion: v1
 kind: Service
@@ -30,4 +30,4 @@ spec:
   ports:
   - port: 8082
   selector:
-    app: todobackend        
+    app: todobackend       
