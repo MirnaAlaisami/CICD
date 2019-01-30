@@ -1,7 +1,7 @@
 node {
 	//Define all variables
 	def appName = 'todobackend'
-	def imageTag = "mirna/${appName}:v${env.BUILD_NUMBER}"
+	def imageTag = "${env.REPOSITORY}/${appName}:v${env.BUILD_NUMBER}"
 	def dockerFileName = 'Dockerfile-todobackend'
 	def containerName = 'todobackend'
 	
@@ -34,7 +34,7 @@ node {
 			credentialsId: env.Docker_Credentials_ID,
 			usernameVariable: 'USERNAME',
 			passwordVariable: 'PASSWORD']]) {
-				docker.withRegistry('', env.Docker_Credentials_ID) {
+				docker.withRegistry(env.Docker_Registry, env.Docker_Credentials_ID) {
 					sh("docker push ${imageTag}")
 				}
 			}
