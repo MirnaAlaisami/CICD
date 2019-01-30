@@ -18,6 +18,14 @@ node {
 			}
 		}
 	}
+	
+	stage('Test') {
+	  container('postgres'){
+	
+	      sh 'mvn test'
+	    
+	  }
+	}
 
 	//Stage 3: Build Docker Image	
 	stage('Build Docker Image') {
