@@ -31,10 +31,10 @@ node {
 	stage('Push Docker Image to Docker Registry') {
 		container('docker'){
 			withCredentials([[$class: 'UsernamePasswordMultiBinding',
-			credentialsId: env.Docker_Credentials_ID,
+			credentialsId: env.DOCKER_CREDENTIALS_ID,
 			usernameVariable: 'USERNAME',
 			passwordVariable: 'PASSWORD']]) {
-				docker.withRegistry(env.Docker_Registry, env.Docker_Credentials_ID) {
+				docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
 					sh("docker push ${imageTag}")
 				}
 			}
@@ -45,10 +45,10 @@ node {
 	//Stage 5 : Deploy Application on K8s
 	stage('Deploy Application on K8s') {
 		container('kubectl'){
-			withKubeConfig([credentialsId: env.K8s_Credentials_ID,
-			serverUrl: env.K8s_ServerURL,
-			contextName: env.K8s_ContextName,
-			clusterName: env.K8s_ClusterName]){
+			withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
+			serverUrl: env.K8s_SERVER_URL,
+			contextName: env.K8s_CONTEXT_NAME,
+			clusterName: env.K8s_CLUSTER_NAME]){
 				sh("kubectl apply -f configmap.yml")
 				sh("kubectl apply -f secret.yml")
 				sh("kubectl apply -f postgres.yml")
