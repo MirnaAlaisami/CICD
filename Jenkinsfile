@@ -20,15 +20,16 @@ node {
 	}
 	
 	stage('Test') {
-	  container('postgres'){
-		container('maven'){
-			dir ("./${appName}") {
+	  container('docker'){
+		  docker.image('postgres').withRun('-p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=matthias -e POSTGRES_DB=mydb') { c ->
+      			sh 'mvn test'
+    		}
 	
 	      			sh 'mvn test'
 			}
-		}
+		
 	    
-	  }
+	  
 	}
 
 	//Stage 3: Build Docker Image	
