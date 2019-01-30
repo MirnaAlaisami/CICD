@@ -55,7 +55,5 @@ node {
 				sh("kubectl apply -f ${appName}.yml")
 			}     
 		}
-		
-    }
-	   
+        }
 }
