@@ -21,8 +21,12 @@ node {
 	
 	stage('Test') {
 	  container('postgres'){
+		container('maven'){
+			dir ("./${appName}") {
 	
-	      sh 'mvn test'
+	      			sh 'mvn test'
+			}
+		}
 	    
 	  }
 	}
