@@ -20,13 +20,13 @@ node {
 	}
 	
 	stage('Test') {
-	  container('postgres'){
-	  }
-			container('maven2'){
+		container('postgres'){
+	  	}
+		container('maven2'){
 			dir ("./${appName}") {
       			    sh ("mvn test")
 			}
-			  }
+		}
 	  
 	}
 
