@@ -13,7 +13,7 @@ node {
 	//Stage 2: Test with mvn
 	stage('Test') {
 		container('docker'){
-		sh("docker rm -f c85218a315b62b03214a556260256552d79d39cc3f036e6bf07ed09c21ec754f")
+	
 		docker.image('postgres:latest').inside.withRun('--name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=matthias -e POSTGRES_DB=mydb') {
 		
 		container('maven').inside("--link=postgres:db"){
