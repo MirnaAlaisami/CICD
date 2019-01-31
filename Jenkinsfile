@@ -24,7 +24,7 @@ node {
 		  docker.image('postgres').withRun('--name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=matthias -e POSTGRES_DB=mydb') { 
 			    docker.image('maven').withRun('-P --name maven --link postgres:postgres'){
 			dir ("./${appName}") {
-      			sh 'mvn test'
+      			    sh ("mvn test")
 			}
 			  }
     		}
