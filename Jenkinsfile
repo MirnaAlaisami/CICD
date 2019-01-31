@@ -9,6 +9,18 @@ node {
 	stage('Application Code Checkout from Git') {
 		checkout scm
 	}
+	
+	//Stage 2: Test with mvn
+	stage('Test') {
+		docker.image('postgres:latest').withRun('--name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=matthias -e POSTGRES_DB=mydb -d') {   
+		}
+		docker.image('maven').inside("--link=postgres:db") {
+            		dir ("./${appName}") {
+      			    sh ("mvn test")
+			}
+    		}
+        
+	}
 
         //Stage 2: Build with mvn
 	stage('Build with Maven') {
@@ -19,17 +31,7 @@ node {
 		}
 	}
 	
-	stage('Test') {
-		container('postgres'){
-	  	}
-		container('maven2'){
-			dir ("./${appName}") {
-      			    sh ("mvn test")
-			}
-		}
-		
-	  
-	}
+	
 
 	//Stage 3: Build Docker Image	
 	stage('Build Docker Image') {
