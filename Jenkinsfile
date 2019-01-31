@@ -20,19 +20,13 @@ node {
 	}
 	
 	stage('Test') {
-	  container('docker'){
-		  docker.image('postgres').withRun('--name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=matthias -e POSTGRES_DB=mydb') { 
-			    docker.image('maven').withRun('-P --name maven --link postgres:postgres'){
+	  container('postgres'){
+	  }
+			container('maven2'){
 			dir ("./${appName}") {
       			    sh ("mvn test")
 			}
 			  }
-    		}
-	
-	      			
-			}
-		
-	    
 	  
 	}
 
