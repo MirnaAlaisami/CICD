@@ -29,7 +29,7 @@ node {
 			  }
     		}
 	
-	      			sh 'mvn test'
+	      			
 			}
 		
 	    
