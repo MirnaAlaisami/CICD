@@ -23,6 +23,8 @@ node {
 				sh("kubectl apply -f postgres.yml")
 			}     
 		}
+		container('postgres'){
+		}
 		container('maven'){
 			dir ("./${appName}") {
 				sh ("mvn test")
