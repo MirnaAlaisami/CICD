@@ -8,6 +8,7 @@ node {
 	//Stage 1: Checkout Code from Git
 	stage('Application Code Checkout from Git') {
 		checkout scm
+		sh ("psql -p 5432 -c 'create database mydb")
 	}
 	
 	
@@ -16,7 +17,7 @@ node {
 	stage('Build with Maven') {
 		container('maven'){
 			dir ("./${appName}") {
-				sh ("psql -p 5432 -c 'create database mydb")
+				
 				sh ("mvn -B -DskipTests clean package")
 			}
 		}
