@@ -13,61 +13,15 @@ node {
 	//Stage 2: Test with mvn
 	stage('Test') {
 	
-		container('maven'){
-			dir ("./${appName}") {
+		container('docker'){
+			
+				sh ("docker-compose -f docker_compose_mvn_test.yml")
 				sh ("mvn test")
-			}
+			
 		}		
         
 	}
 	
 
-        //Stage 2: Build with mvn
-	stage('Build with Maven') {
-		container('maven'){
-			dir ("./${appName}") {
-				sh ("mvn -B -DskipTests clean package")
-			}
-		}
-	}
-	
-	
-
-	//Stage 3: Build Docker Image	
-	stage('Build Docker Image') {
-		container('docker'){
-			sh("docker build -f ${dockerFileName} -t ${imageTag} .")
-		}
-		
-	}
-
-	//Stage 4: Push the Image to a Docker Registry
-	stage('Push Docker Image to Docker Registry') {
-		container('docker'){
-			withCredentials([[$class: 'UsernamePasswordMultiBinding',
-			credentialsId: env.DOCKER_CREDENTIALS_ID,
-			usernameVariable: 'USERNAME',
-			passwordVariable: 'PASSWORD']]) {
-				docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
-					sh("docker push ${imageTag}")
-				}
-			}
-		}
-		
-	}
-
-	//Stage 5 : Deploy Application on K8s
-	stage('Deploy Application on K8s') {
-		container('kubectl'){
-			withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
-			serverUrl: env.K8s_SERVER_URL,
-			contextName: env.K8s_CONTEXT_NAME,
-			clusterName: env.K8s_CLUSTER_NAME]){
-				sh("kubectl apply -f configmap.yml")
-				sh("kubectl apply -f secret.yml")
-				sh("kubectl apply -f postgres.yml")
-				sh("kubectl apply -f ${appName}.yml")
-			}     
-		}
-        }
+       
 }
