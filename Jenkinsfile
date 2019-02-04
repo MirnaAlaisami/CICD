@@ -14,7 +14,7 @@ node {
 	stage('Test') {
 		
 		
-		container('postgres'){
+		
 		
 		container('maven'){
 			dir ("./${appName}") {
@@ -22,7 +22,7 @@ node {
 				
 			}
 		}
-		}
+		
 			
 	}
 	
