@@ -13,7 +13,14 @@ node {
 	//Stage 2: Test with mvn
 	stage('Test') {
 		
-		
+		container('kubectl'){
+			withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
+			serverUrl: env.K8s_SERVER_URL,
+			contextName: env.K8s_CONTEXT_NAME,
+			clusterName: env.K8s_CLUSTER_NAME]){
+				sh("kubectl apply -f postgres_test.yml")
+			}     
+		}
 		container('maven'){
 			dir ("./${appName}") {
 				sh ("mvn test")
