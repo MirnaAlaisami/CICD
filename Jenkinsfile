@@ -15,7 +15,7 @@ node {
 	
 		container('maven'){
 			dir ("./${appName}") {
-				sh ("mvn test -Dhttp.nonProxyHosts=http://localhost:5432")
+				sh ("mvn test -Dhttp.nonProxyHosts=localhost\|127.0.0.1")
 			}
 		}		
         
