@@ -11,7 +11,16 @@ node {
 		
 	}
 	
-	
+	stage('Build with Maven') {
+		container('postgresdb'){
+		}
+		container('maven'){
+			dir ("./${appName}") {
+				
+				sh ("mvn test")
+			}
+		}
+	}
 	
 	//Stage 2: Build with mvn
 	stage('Build with Maven') {
