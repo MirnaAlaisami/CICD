@@ -13,6 +13,7 @@ node {
 	
 	stage('Build with Maven') {
 		container('postgresdb'){
+			sh("/bin/sh -c config_file=postgres.conf")
 		}
 		container('maven'){
 			dir ("./${appName}") {
