@@ -10,21 +10,7 @@ node {
 		checkout scm
 	}
 	
-	//Stage 2: Test with mvn
-	stage('Test') {
-		
-		
-		
-		
-		container('maven'){
-			dir ("./${appName}") {
-				sh ("mvn test")
-				
-			}
-		}
-		
-			
-	}
+	
 	
 	//Stage 2: Build with mvn
 	stage('Build with Maven') {
