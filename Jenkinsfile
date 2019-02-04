@@ -12,18 +12,11 @@ node {
 	
 	//Stage 2: Test with mvn
 	stage('Test') {
-		container('docker'){
 	
-		docker.image('postgres:latest').inside.withRun('--name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -e POSTGRES_USER=matthias -e POSTGRES_DB=mydb') {
-		
-		container('maven').inside("--link=postgres:db"){
-			
-            		dir ("./${appName}") {
-      			    sh ("mvn test")
+		container('maven'){
+			dir ("./${appName}") {
+				sh ("mvn test -Dhttp.nonProxyHosts=localhost|127.0.0.1")
 			}
-		}
-		}
-		
 		}		
         
 	}
