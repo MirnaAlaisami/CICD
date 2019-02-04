@@ -15,7 +15,7 @@ node {
 	
 		container('maven'){
 			dir ("./${appName}") {
-				sh ("mvn test -e POSTGRES_HOST=localhost")
+				sh ("mvn test")
 			}
 		}		
         
