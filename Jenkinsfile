@@ -15,7 +15,7 @@ node {
 	
 		container('docker'){
 			
-				sh ("docker-compose -f docker_compose_mvn_test.yml")
+				sh ("docker-compose -f docker_compose_mvn_test.yml run")
 				
 			
 		}		
