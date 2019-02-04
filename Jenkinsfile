@@ -16,7 +16,10 @@ node {
 		
 		container('maven'){
 			dir ("./${appName}") {
+				sh("apt-get install postgresql postgresql-contrib")
+				sh("sudo -u postgres psql")
 				sh ("mvn test")
+				
 			}
 		}
 			
