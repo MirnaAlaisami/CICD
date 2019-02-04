@@ -18,7 +18,9 @@ node {
 			serverUrl: env.K8s_SERVER_URL,
 			contextName: env.K8s_CONTEXT_NAME,
 			clusterName: env.K8s_CLUSTER_NAME]){
-				sh("kubectl apply -f postgres_test.yml")
+				sh("kubectl apply -f configmap.yml")
+				sh("kubectl apply -f secret.yml")
+				sh("kubectl apply -f postgres.yml")
 			}     
 		}
 		container('maven'){
