@@ -15,10 +15,6 @@ node {
 		
 		
 		container('maven'){
-			sh("sudo -u postgres psql")
-			sh("CREATE USER matthias WITH PASSWORD 'password'")
-			sh("CREATE DATABASE mydb WITH OWNER matthias encoding 'UTF8'")
-			sh("GRANT ALL PRIVILEGES ON DATABASE mydb TO matthias")
 			dir ("./${appName}") {
 				sh ("mvn test")
 				
