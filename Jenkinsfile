@@ -17,7 +17,7 @@ node {
 		container('maven'){
 			dir ("./${appName}") {
 				
-				sh ("mvn test")
+				sh ("mvn test -Dspring.datasource.url='jdbc:postgresql://localhost:5432/mydb'")
 			}
 		}
 	}
