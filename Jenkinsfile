@@ -22,7 +22,7 @@ node {
 		container('maven'){
 			dir ("./${appName}") {
 				
-				sh ("mvn test -Dspring.datasource.url='jdbc//10.59.244.5:5432/mydb' -Dspring.datasource.username='matthias' -Dspring.datasource.password='password'")
+				sh ("mvn test -Dspring.datasource.url='jdbc:postgresql://10.59.244.5:5432/mydb' -Dspring.datasource.username='matthias' -Dspring.datasource.password='password'")"'")
 			}
 		}
 	}
