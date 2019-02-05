@@ -28,9 +28,15 @@ node {
 	}*/
 	
 	stage('Test with Maven') {
-		//container('postgresdb'){
-			
-		//}
+		container('maven'){
+			dir ("./${appName}") {
+				
+				sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url='jdbc:postgresql://postgresdb:5432/mydb' -Dspring.datasource.username='matthias -Dspring.datasource.password='password'")
+				    }
+		}
+	}
+	
+	stage('Test with Maven/DB') {
 		container('maven'){
 			dir ("./${appName}") {
 				
