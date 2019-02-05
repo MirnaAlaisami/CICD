@@ -27,6 +27,18 @@ node {
 		}
 	}*/
 	
+	stage('Test with Maven') {
+		//container('postgresdb'){
+			
+		//}
+		container('maven'){
+			dir ("./${appName}") {
+				
+				sh ("mvn test -Dspring.profiles.active=dev")
+				    }
+		}
+	}
+	
 	//Stage 2: Build with mvn
 	stage('Build with Maven') {
 		container('maven'){
