@@ -38,10 +38,13 @@ node {
 	}
 	
 	stage('Test with Maven/DB') {
+		container('docker'){
+			sh("docker run --name postgresdb -p 5432:5432 -e POSTGRES_USER=matthias -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydb -d postgres -c config_file=postgres.conf")
+		}
 		container('maven'){
 			dir ("./${appName}") {
 				
-				sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://postgresdb:5432/mydb -Dspring.datasource.username=matthias -Dspring.datasource.password=password")
+				sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://localhost:5432/mydb -Dspring.datasource.username=matthias -Dspring.datasource.password=password")
 				    }
 		}
 	}
