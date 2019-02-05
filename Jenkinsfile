@@ -27,11 +27,12 @@ node {
 		}
 	}*/
 	
+	
 	stage('Test with Maven') {
 		container('maven'){
 			dir ("./${appName}") {
 				
-				sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url='jdbc:postgresql://postgresdb:5432/mydb' -Dspring.datasource.username='matthias -Dspring.datasource.password='password'")
+				sh ("mvn test -Dspring.profiles.active=dev")
 				    }
 		}
 	}
@@ -40,10 +41,11 @@ node {
 		container('maven'){
 			dir ("./${appName}") {
 				
-				sh ("mvn test -Dspring.profiles.active=dev")
+				sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://postgresdb:5432/mydb -Dspring.datasource.username=matthias -Dspring.datasource.password=password")
 				    }
 		}
 	}
+	
 	
 	//Stage 2: Build with mvn
 	stage('Build with Maven') {
