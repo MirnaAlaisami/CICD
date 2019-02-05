@@ -10,15 +10,15 @@ node {
 		checkout scm
 		
 	}
-	stage('Test with docker') {
-		container('docker'){
+	//stage('Test with docker') {
+		//container('docker'){
 			//sh("docker run --name postgresdb -p 5432:5432 -e POSTGRES_USER=matthias -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydb -d postgres -c config_file=postgres.conf")
-		}
-	}
+		//}
+	//}
 	stage('Test with Maven') {
-		container('postgresdb'){
+		//container('postgresdb'){
 			
-		}
+		//}
 		container('maven'){
 			dir ("./${appName}") {
 				
