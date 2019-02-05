@@ -30,7 +30,7 @@ node {
 			contextName: env.K8s_CONTEXT_NAME,
 			clusterName: env.K8s_CLUSTER_NAME]){
 				sh("kubectl apply -f postgres_test.yml")
-			}
+			} 
 				
 		}
 		container('maven'){ 
