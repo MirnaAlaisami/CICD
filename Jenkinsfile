@@ -35,8 +35,7 @@ node {
 		}
 		container('maven'){
 			dir ("./${appName}") {
-				
-			sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://postgres/mydb -Dspring.datasource.username=matthias -Dspring.datasource.password=password")
+				sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://postgres/${env.DB_NAME} -Dspring.datasource.username=${env.DB_USERNAME} -Dspring.datasource.password=${env.DB_PASSWORD}")
 			}
 		}
 	}
