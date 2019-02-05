@@ -12,7 +12,7 @@ node {
 	}
 	
 	
-	
+	//Stage 2: Test Code with Maven/built-in Memory
 	stage('Test with Maven/H2') {
 		container('maven'){
 			dir ("./${appName}") {
@@ -22,6 +22,7 @@ node {
 		}
 	}
 	
+	//Stage 3: Test Code with Maven/DB
 	stage('Test with Maven/PSQL') {
 		container('kubectl'){
 			withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
@@ -41,7 +42,7 @@ node {
 	}
 	
 	
-	//Stage 2: Build with mvn
+	//Stage 4: Build with mvn
 	stage('Build with Maven') {
 		container('maven'){
 			dir ("./${appName}") {
@@ -53,7 +54,7 @@ node {
 	
 	
 
-	//Stage 3: Build Docker Image	
+	//Stage 5: Build Docker Image	
 	stage('Build Docker Image') {
 		container('docker'){
 			sh("docker build -f ${dockerFileName} -t ${imageTag} .")
@@ -61,7 +62,7 @@ node {
 		
 	}
 
-	//Stage 4: Push the Image to a Docker Registry
+	//Stage 6: Push the Image to a Docker Registry
 	stage('Push Docker Image to Docker Registry') {
 		container('docker'){
 			withCredentials([[$class: 'UsernamePasswordMultiBinding',
@@ -76,7 +77,7 @@ node {
 		
 	}
 
-	//Stage 5 : Deploy Application on K8s
+	//Stage 7: Deploy Application on K8s
 	stage('Deploy Application on K8s') {
 		container('kubectl'){
 			withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
