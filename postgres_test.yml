@@ -9,7 +9,7 @@ spec:
         app: postgres
     spec:
       volumes:
-        - name: data_test
+        - name: data-test
           emptyDir: {}
       containers:
        - image: postgres
@@ -25,8 +25,8 @@ spec:
          - containerPort: 5432
            name: postgres
          volumeMounts:
-           - name: data_test
-             mountPath: /var/lib/postgresql/data_test
+           - name: data-test
+             mountPath: /var/lib/postgresql/data-test
 ---
 apiVersion: v1
 kind: Service
