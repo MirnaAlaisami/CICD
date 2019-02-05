@@ -13,7 +13,7 @@ node {
 	
 	
 	
-	stage('Test with Maven') {
+	stage('Test with Maven/H2') {
 		container('maven'){
 			dir ("./${appName}") {
 				
@@ -22,16 +22,20 @@ node {
 		}
 	}
 	
-	stage('Test with Maven/DB') {
-		container('docker'){
-			sh("docker rm -f postgresdb")
-			sh("docker run --name postgresdb -p 5432:5432 -e POSTGRES_USER=matthias -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydb -d postgres -c config_file=postgres.conf")
+	stage('Test with Maven/PSQL') {
+		container('kubectl'){
+			withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
+			serverUrl: env.K8s_SERVER_URL,
+			contextName: env.K8s_CONTEXT_NAME,
+			clusterName: env.K8s_CLUSTER_NAME]){
+				sh("kubectl apply -f postgres_test.yml")
+				
 		}
 		container('maven'){
 			dir ("./${appName}") {
 				
-			sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=\"jdbc:postgresql://127.0.0.1:5432/mydb\" -Dspring.datasource.username=matthias -Dspring.datasource.password=password")
-				    }
+			sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://postgres/mydb -Dspring.datasource.username=matthias -Dspring.datasource.password=password")
+			}
 		}
 	}
 	
