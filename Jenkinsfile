@@ -11,7 +11,7 @@ node {
 		
 	}
 	
-	/*
+	
 	
 	//Stage 2: Test Code with Maven/built-in Memory
 	stage('Test with Maven/H2') {
@@ -41,7 +41,7 @@ node {
 		}
 	}
 	
-	*/
+	
 	
 	
 	//Stage 4: Build with mvn
