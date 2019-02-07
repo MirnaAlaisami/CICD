@@ -30,7 +30,7 @@ node {
 			serverUrl: env.K8s_SERVER_URL,
 			contextName: env.K8s_CONTEXT_NAME,
 			clusterName: env.K8s_CLUSTER_NAME]){
-				sh("kubectl delete service postgres")
+				
 				sh("kubectl apply -f postgres_test.yml")
 			} 
 				
