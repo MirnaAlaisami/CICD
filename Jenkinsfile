@@ -1,9 +1,13 @@
 node {
 	//Define all variables
 	def appName = 'todobackend'
+	def app2Name = 'todoui'
 	def imageTag = "${env.REPOSITORY}/${appName}:v${env.BUILD_NUMBER}"
+	def image2Tag = "${env.REPOSITORY}/${app2Name}:v${env.BUILD_NUMBER}"
 	def dockerFileName = 'Dockerfile-todobackend'
 	def containerName = 'todobackend'
+	def dockerFile2Name = 'Dockerfile-todoui'
+	def container2Name = 'todoui'
 	
 	//Stage 1: Checkout Code from Git
 	stage('Application Code Checkout from Git') {
@@ -52,6 +56,10 @@ node {
 				
 				sh ("mvn -B -DskipTests clean package")
 			}
+			dir ("./${app2Name}") {
+				
+				sh ("mvn -B -DskipTests clean package")
+			}
 		}
 	}
 	
@@ -61,6 +69,7 @@ node {
 	stage('Build Docker Image') {
 		container('docker'){
 			sh("docker build -f ${dockerFileName} -t ${imageTag} .")
+			sh("docker build -f ${dockerFile2Name} -t ${image2Tag} .")
 		}
 		
 	}
@@ -74,6 +83,7 @@ node {
 			passwordVariable: 'PASSWORD']]) {
 				docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
 					sh("docker push ${imageTag}")
+					sh("docker push ${image2Tag}")
 				}
 			}
 		}
@@ -91,6 +101,7 @@ node {
 				sh("kubectl apply -f secret.yml")
 				sh("kubectl apply -f postgres.yml")
 				sh("kubectl apply -f ${appName}.yml")
+				sh("kubectl apply -f ${app2Name}.yml")
 			}     
 		}
         }
