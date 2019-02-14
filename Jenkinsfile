@@ -100,8 +100,8 @@ node {
 				sh("kubectl apply -f configmap.yml")
 				sh("kubectl apply -f secret.yml")
 				sh("kubectl apply -f postgres.yml")
-				sh("kubectl apply -f ${appName}.yml")
 				sh("kubectl delete service todobackend")
+				sh("kubectl apply -f ${appName}.yml")
 				sh("kubectl apply -f ${app2Name}.yml")
 			}     
 		}
