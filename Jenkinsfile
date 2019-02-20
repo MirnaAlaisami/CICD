@@ -63,7 +63,6 @@ node {
 		}
 	}
 	
-	
 
 	//Stage 5: Build Docker Image	
 	stage('Build Docker Image') {
