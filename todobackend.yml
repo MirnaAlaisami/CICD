@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: todobackend
-        image: maeddes/todobackend:v1
+        image: mirna/todobackend:v1
 ---
 apiVersion: v1
 kind: Service
