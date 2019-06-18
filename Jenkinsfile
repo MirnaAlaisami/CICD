@@ -102,7 +102,7 @@ node {
 				sh("kubectl apply -f ${app1_name}.yml")
 				sh("kubectl set image deployment/${app1_name} ${app1_container_name}=${app1_image_tag}")
 				sh("kubectl apply -f ${app2_name}.yml")
-				sh("kubectl set image deployment/${app2_name} ${app1_container_name}=${app2_image_tag}")
+				sh("kubectl set image deployment/${app2_name} ${app2_container_name}=${app2_image_tag}")
 			}     
 		}
         }
