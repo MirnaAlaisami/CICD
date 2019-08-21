@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  postgres.db.name: mydb
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: default

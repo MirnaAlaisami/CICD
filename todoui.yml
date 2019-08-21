@@ -13,14 +13,14 @@ spec:
     spec:
       containers:
       - name: todoui
-        image: maeddes/todoui:v1
+        image: mirna/todoui:v1
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: todoui
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - port: 8090
   selector:

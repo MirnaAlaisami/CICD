@@ -12,16 +12,16 @@ spec:
         app: todobackend
     spec:
       containers:
-      - name: todobackend
-        image: mirna/todobackend:v1
+      - image: mirna/todobackend:1
+        name: todobackend
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: todobackend
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-  - port: 8080
+  - port: 8082
   selector:
-    app: todobackend        
+app: todobackend   
