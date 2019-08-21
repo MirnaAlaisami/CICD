@@ -1,13 +1,13 @@
 node {
 	//Define all variables
-	def appName = 'todobackend'
-	def app2Name = 'todoui'
-	def imageTag = "${env.REPOSITORY}/${appName}:v${env.BUILD_NUMBER}"
-	def image2Tag = "${env.REPOSITORY}/${app2Name}:v${env.BUILD_NUMBER}"
-	def dockerFileName = 'Dockerfile-todobackend'
-	def containerName = 'todobackend'
-	def dockerFile2Name = 'Dockerfile-todoui'
-	def container2Name = 'todoui'
+	def app1_name = 'todobackend'
+	def app2_name = 'todoui'
+	def app1_image_tag = "${env.REPOSITORY}/${app1_name}:v${env.BUILD_NUMBER}"
+	def app2_image_tag = "${env.REPOSITORY}/${app2_name}:v${env.BUILD_NUMBER}"
+	def app1_dockerfile_name = 'Dockerfile-todobackend'
+	def app2_dockerfile_name = 'Dockerfile-todoui'
+	def app1_container_name = 'todobackend'
+	def app2_container_name = 'todoui'
 	
 	//Stage 1: Checkout Code from Git
 	stage('Application Code Checkout from Git') {
@@ -20,12 +20,13 @@ node {
 	//Stage 2: Test Code with Maven/built-in Memory
 	stage('Test with Maven/H2') {
 		container('maven'){
-			dir ("./${appName}") {
+			dir ("./${app1_name}") {
 				
 				sh ("mvn test -Dspring.profiles.active=dev")
 				    }
 		}
 	}
+	
 	
 	//Stage 3: Test Code with Maven/DB
 	stage('Test with Maven/PSQL') {
@@ -40,7 +41,7 @@ node {
 				
 		}
 		container('maven'){ 
-			dir ("./${appName}") {
+			dir ("./${app1_name}") {
 				sh ("mvn test -Dspring.profiles.active=prod -Dspring.datasource.url=jdbc:postgresql://${env.PSQL_TEST}/${env.DB_NAME} -Dspring.datasource.username=${env.DB_USERNAME} -Dspring.datasource.password=${env.DB_PASSWORD}")
 			}
 		}
@@ -52,11 +53,11 @@ node {
 	//Stage 4: Build with mvn
 	stage('Build with Maven') {
 		container('maven'){
-			dir ("./${appName}") {
+			dir ("./${app1_name}") {
 				
 				sh ("mvn -B -DskipTests clean package")
 			}
-			dir ("./${app2Name}") {
+			dir ("./${app2_name}") {
 				
 				sh ("mvn -B -DskipTests clean package")
 			}
@@ -67,8 +68,8 @@ node {
 	//Stage 5: Build Docker Image	
 	stage('Build Docker Image') {
 		container('docker'){
-			sh("docker build -f ${dockerFileName} -t ${imageTag} .")
-			sh("docker build -f ${dockerFile2Name} -t ${image2Tag} .")
+			sh("docker build -f ${app1_dockerfile_name} -t ${app1_image_tag} .")
+			sh("docker build -f ${app2_dockerfile_name} -t ${app2_image_tag} .")
 		}
 		
 	}
@@ -81,8 +82,8 @@ node {
 			usernameVariable: 'USERNAME',
 			passwordVariable: 'PASSWORD']]) {
 				docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
-					sh("docker push ${imageTag}")
-					sh("docker push ${image2Tag}")
+					sh("docker push ${app1_image_tag}")
+					sh("docker push ${app2_image_tag}")
 				}
 			}
 		}
@@ -99,13 +100,13 @@ node {
 				sh("kubectl apply -f configmap.yml")
 				sh("kubectl apply -f secret.yml")
 				sh("kubectl apply -f postgres.yml")
-				sh("kubectl apply -f ${appName}.yml")
-				sh("kubectl set image deployment/${appName} ${containerName}=${imageTag}")
-				sh("kubectl apply -f ${app2Name}.yml")
-				sh("kubectl set image deployment/${app2Name} ${container2Name}=${image2Tag}")
+				sh("kubectl apply -f ${app1_name}.yml")
+				sh("kubectl set image deployment/${app1_name} ${app1_container_name}=${app1_image_tag}")
+				sh("kubectl apply -f ${app2_name}.yml")
+				sh("kubectl set image deployment/${app2_name} ${app2_container_name}=${app2_image_tag}")
 			}     
 		}
         }
-
-       
+  
 }
+
