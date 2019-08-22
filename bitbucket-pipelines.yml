@@ -7,30 +7,26 @@ pipelines:
     # Test with Maven/H2
     - step:
         name: Test with Maven/H2
-        caches: 
-          - maven
         script: 
           - cd todobackend
           - mvn test -Dspring.profiles.active=dev
           - cd ..
+        caches: 
+          - maven
+          
     # Test with Maven/PSQL
     - step:
         name: Test with Maven/PSQL
-        caches: 
-          - maven       
         script: 
-          - docker run --name postgresdb -p 5432:5432 -e POSTGRES_PASSWORD=$DB_PASSWORD -e POSTGRES_USER=$DB_USER -e POSTGRES_DB=$DB_NAME -d postgres:latest
           - cd todobackend
           - mvn test -Dspring.profiles.active=prod -DPOSTGRES_HOST=localhost
           - cd ..
-          
-          
+        services:
+          - postgresdb
+                  
     # Build with Maven, Create & Push Docker Images to a Docker Registry
     - step:
         name: Build with Maven, Create & Push Docker Images to a Docker Registry
-        caches: 
-          - maven
-          - docker
         script: 
           - cd todobackend
           - mvn -B -DskipTests clean install
@@ -43,6 +39,11 @@ pipelines:
           - docker login $DOCKER_REPOSITORY --username $USERNAME --password $PASSWORD
           - docker push $DOCKER_REPOSITORY/todobackend:v$BITBUCKET_BUILD_NUMBER
           - docker push $DOCKER_REPOSITORY/todoui:v$BITBUCKET_BUILD_NUMBER
+        services:
+          - docker
+        caches: 
+          - docker
+          
     # Deploy Application on K8s
     - step:
         name: Deploy Application on K8s
@@ -116,7 +117,14 @@ pipelines:
               AZURE_RESOURCE_GROUP: 'CICDResourceGroup'
               KUBECTL_COMMAND: 'set image' 
               KUBECTL_ARGUMENTS: 'deployment/todoui todoui=$DOCKER_REPOSITORY/todoui:v$BITBUCKET_BUILD_NUMBER'
-
-          
+              
+definitions: 
+  services:
+    postgresdb: 
+      image: postgres 
+      variables: 
+        POSTGRES_PASSWORD: $DB_PASSWORD 
+        POSTGRES_USER: $DB_USER 
+        POSTGRES_DB: $DB_NAME         
 
 
