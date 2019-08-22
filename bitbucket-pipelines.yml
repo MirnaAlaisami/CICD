@@ -119,8 +119,8 @@ definitions:
     postgresdb: 
       image: postgres 
       variables: 
-        POSTGRES_PASSWORD: $DB_PASSWORD 
-        POSTGRES_USER: $DB_USER 
-        POSTGRES_DB: $DB_NAME         
+        POSTGRES_USER: $DB_USER
+        POSTGRES_PASSWORD: $DB_PASSWORD  
+        POSTGRES_DB: $DB_NAME            
 
 
