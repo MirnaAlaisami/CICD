@@ -6,7 +6,6 @@ pipelines:
         script: 
           - cd todobackend
           - mvn test -Dspring.profiles.active=dev
-          - cd ..
         caches: 
           - maven
           
