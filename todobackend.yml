@@ -24,4 +24,4 @@ spec:
   ports:
   - port: 8082
   selector:
-app: todobackend   
+    app: todobackend   
