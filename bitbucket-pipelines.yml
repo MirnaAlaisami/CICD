@@ -15,7 +15,6 @@ pipelines:
         script: 
           - cd todobackend
           - mvn test -Dspring.profiles.active=prod -DPOSTGRES_HOST=localhost
-          - cd ..
         services:
           - postgresdb
                   
