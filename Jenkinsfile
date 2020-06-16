@@ -74,7 +74,7 @@ node {
 		
 	}
 
-	//Stage 6: Push the Image to a Docker Registry
+	//Stage 6: Push the Image to a Docker Registry/GCR
 	stage('Push Docker Image to Docker Registry') {
 		container('docker'){
 			withCredentials([[$class: 'UsernamePasswordMultiBinding',
